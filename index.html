@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+
+<header>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <title>CY's Website</title>
+
+  <style>
+    :root {
+  --bg-col: #fff;
+  --text-col: #000;
+
+  --book-bg-col: lightblue;
+  --book-text: #000;
+
+  --light-gray: rgba(0, 0, 0, 0.1);
+  --mid-gray: rgba(0, 0, 0, 0.3);
+
+  --bottom-margin: 60px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-col: #111;
+    --text-col: #fff;
+
+    --book-bg-col: #194552;
+    --book-bg-col: #193b52;
+    --book-text: #fff;
+
+    --light-gray: rgba(255, 255, 255, 0.15);
+    --mid-gray: rgba(255, 255, 255, 0.3);
+  }
+}
+
+body {
+  position: relative;
+  color: var(--text-col);
+  background-color: var(--bg-col);
+  margin: 0;
+  padding: 20px;
+
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+@media (min-width: 640px) {
+  body {
+    padding: 40px calc(50vw - 300px) 20px;
+  }
+}
+
+h1 {
+  color: var(--text-col);
+  amargin: 0 0 20px;
+}
+h3 {
+  color: var(--text-col);
+  margin: 0;
+}
+
+search {
+  position: sticky;
+  z-index: 100;
+  top: 0;
+  color: var(--light-gray);
+  background-color: var(--bg-col);
+  box-shadow: 0 5px 20px var(--bg-col);
+  margin: 0 -20px var(--bottom-margin);
+  padding: 10px 20px 0;
+}
+search input {
+  width: 100%;
+  padding: 10px 8px;
+  font-size: 16px;
+  color: var(--text-col);
+  background-color: var(--bg-col);
+  border: none;
+  border-bottom: 1px solid var(--mid-gray);
+  hborder-radius: 26px;
+  outline: none;
+}
+search button {
+  position: absolute;
+  top: 10px;
+  bottom: 1px;
+  right: 20px;
+  font-size: 16px;
+  width: 40px;
+  color: var(--mid-gray);
+  background-color: var(--bg-col);
+  border: none;
+}
+@media (min-width: 640px) {
+  search {
+    margin: 0 calc(-50vw + 300px) var(--bottom-margin);
+    padding: 10px calc(50vw - 300px) 0;
+  }
+  search button {
+    right: calc(50vw - 300px);
+  }
+}
+
+.continue,
+.recommend {
+  margin: 0 -20px var(--bottom-margin);
+  padding: 10px 20px 10px;
+
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: row;
+  gap: 20px;
+
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+@media (min-width: 640px) {
+  .continue,
+  .recommend {
+    margin: 0 calc(-50vw + 300px) var(--bottom-margin);
+    padding: 10px calc(50vw - 300px) 10px;
+  }
+}
+.continue::-webkit-scrollbar,
+.recommend::-webkit-scrollbar {
+  display: none;
+}
+.con-blk-shell {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: row;
+  gap: 10px;
+}
+.book {
+  position: relative;
+  text-align: left;
+  border-radius: 2px;
+  height: 84.6px;
+  min-width: 60px;
+  width: 60px;
+  background-color: var(--book-bg-col);
+  box-shadow: inset -1px -2px 2px rgba(0, 0, 0, 0.1),
+    0px 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  cursor: pointer;
+
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.book:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 12%;
+  background: #000000;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 18%,
+    rgba(0, 0, 0, 0.1) 52%,
+    rgba(255, 255, 255, 0.08) 61%,
+    rgba(0, 0, 0, 0) 81%
+  );
+}
+.book:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 90%;
+  bottom: -10%;
+  left: 20%;
+  right: 20%;
+  ubackground: #000000;
+}
+
+.con-book-info-shell {
+  min-width: 100px;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+  gap: 2px;
+}
+.con-book-info-name {
+  display: block;
+  color: var(--text-col);
+  font-size: 14px;
+  font-weight: 600;
+}
+.con-book-info-author {
+  display: block;
+  color: var(--text-col);
+  font-size: 14px;
+}
+.con-book-info-percent {
+  display: block;
+  font-size: 14px;
+  color: var(--text-col);
+  opacity: 0.5;
+}
+
+.continue .book-info-name {
+  font-size: 8.4px;
+  margin: 6px 7.2px 3px;
+}
+.continue .book-info-author {
+  font-size: 6px;
+  margin: 0 7.2px 3.6px;
+}
+
+.recommend .book,
+.ocean .book {
+  height: 141px;
+  width: 100px;
+  min-width: 100px;
+}
+.book-info-name {
+  display: block;
+  color: var(--book-text);
+  opacity: 0.8;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 10px 12px 5px;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  text-overflow: ellipsis;
+}
+.book-info-author {
+  color: var(--book-text);
+  opacity: 0.5;
+  font-size: 10px;
+  margin: 0 12px 6px;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  text-overflow: ellipsis;
+}
+
+.ocean {
+  margin: 0 -20px var(--bottom-margin);
+  padding: 10px 20px 20px;
+
+  place-items: center;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  ygap: 10px;
+  gap: clamp(10px, 2vw, 40px);
+
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lcc-class {
+  margin: 0 0 var(--bottom-margin);
+  padding: -5px -2px 6px;
+}
+.lcc-class span {
+  color: var(--book-text);
+  font-size: 12px;
+  padding: 4px 10px 4px;
+  margin: 6px 2px;
+  display: inline-block;
+  border-radius: 20px;
+  background-color: var(--light-gray);
+  cursor: pointer;
+}
+.lcc-class span .book-num {
+  padding: 0px;
+  margin: 0px;
+  background-color: transparent;
+  opacity: 0.5;
+  margin-left: 8px;
+}
+
+  </style>
+
+</header>
+
+<body>
+  <h1>Pageless</h1>
+  <search>
+    <form action="/search" method="get">
+      <input type="search" id="site-search" name="q" placeholder="請輸入關鍵字..." />
+      <button type="submit"><i class="fas fa-search"></i></button>
+    </form>
+  </search>
+
+  <h3>繼續</h3>
+  <div class="continue">
+    <div class="con-blk-shell">
+      <div class="book">
+        <span class="book-info-name">I Go To School By Bus, To Somewhere Over The Rainbow, Blue Birds Fly</span>
+        <span class="book-info-author">PK Yam</span>
+      </div>
+      <div class="con-book-info-shell">
+        <span class="con-book-info-name">I Go To School By Bus</span>
+        <span class="con-book-info-author">PK Yam</span>
+        <span class="con-book-info-percent">38%</sapn>
+      </div>
+    </div>
+    <div class="con-blk-shell">
+      <div class="book"></div>
+      <div class="con-book-info-shell">
+        <span class="con-book-info-name">I Go To School By Bus</span>
+        <span class="con-book-info-author">PK Yam</span>
+        <span class="con-book-info-percent">38%</sapn>
+      </div>
+    </div>
+    <div class="con-blk-shell">
+      <div class="book"></div>
+      <div class="con-book-info-shell">
+        <span class="con-book-info-name">I Go To School By Bus</span>
+        <span class="con-book-info-author">PK Yam</span>
+        <span class="con-book-info-percent">38%</sapn>
+      </div>
+    </div>
+    <div class="con-blk-shell">
+      <div class="book"></div>
+      <div class="con-book-info-shell">
+        <span class="con-book-info-name">I Go To School By Bus</span>
+        <span class="con-book-info-author">PK Yam</span>
+        <span class="con-book-info-percent">38%</sapn>
+      </div>
+    </div>
+  </div>
+
+  <h3>推薦</h3>
+  <div class="recommend">
+    <div class="book">
+      <span class="book-info-name">A Room of One's Own</span>
+      <span class="book-info-author">Virginia Woolf</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By MTR, I Eat Fire Chicken A Lot</span>
+      <span class="book-info-author">PK Yam, Axxbhhhb Cbb</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">由火雞園到公共房屋</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Swim To School</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+  </div>
+
+  <h3>依分類瀏覽</h3>
+  <div class="lcc-class">
+    <span>B：哲學、心理學、宗教 <span class="book-num">12</span></span>
+    <span>C：歷史輔助科學</span>
+    <span>D：世界史與舊大陸史</span>
+    <span>E：美洲史</span>
+    <span>F：美洲地方史</span>
+    <span>G：地理、人類學、休閒</span>
+    <br>
+    <br>
+    <span>H：社會科學</span>
+    <span>J：政治科學</span>
+    <span>K：法律</span>
+    <span>L：教育</span>
+    <br>
+    <br>
+    <span>M：音樂</span>
+    <span>N：美術</span>
+    <span>P：語言與文學<span class="book-num">29</span></span>
+    <br>
+    <br>
+    <span>Q：科學</span>
+    <span>R：醫學</span>
+    <span>S：農業</span>
+    <span>T：技術</span>
+    <span>U：軍事科學</span>
+    <span>V：海軍科學</span>
+    <br>
+    <br>
+    <span>Z：圖書目錄學、圖書館學與資訊資源</span>
+    <span>A：總類</span>
+  </div>
+
+  <h3>投入書海中…</h3>
+  <div class="ocean">
+    <div class="book">
+      <span class="book-info-name">I Go To School By MTR, I Eat Fire Chicken A Lot</span>
+      <span class="book-info-author">PK Yam, Axxbhhhb Cbb</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">由火雞園到公共房屋</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Swim To School</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+    <div class="book">
+      <span class="book-info-name">I Go To School By Bus, like 91, 91M, 91MS, 91P</span>
+      <span class="book-info-author">PK Yam</span>
+    </div>
+  </div>
+
+  <script>
+  </script>
+</body>
+
+</html>
